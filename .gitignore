@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Archives
+*.tar.gz
+*.zip
+
+# Editor files
+.vscode/
+.idea/

@@ -1,0 +1,47 @@
+SATELLITE INSPECTION ROBOTIC ARM
+EXPERIMENTAL RESULTS SUMMARY
+========================================
+
+SIMULATION ENVIRONMENT
+ROS 2 Jazzy
+Gazebo Harmonic
+Ubuntu 24.04 (WSL2)
+Zero-gravity simulation world
+
+EXPERIMENT 1: STATIONARY TARGET
+Measurements: 23
+Mean horizontal error: 5.50 pixels
+Mean vertical error: 6.90 pixels
+Mean overall error: 8.82 pixels
+
+EXPERIMENT 2: MOVING TARGET
+Target displacement: 0.050 metres
+Successful target positions: 11
+Measurements: 66
+Mean horizontal error: 5.88 pixels
+Mean vertical error: 6.21 pixels
+Mean overall error: 8.73 pixels
+Maximum overall error: 13.34 pixels
+Final overall error: 8.04 pixels
+Samples within +/-12 pixels on both axes: 65/66 (98.5%)
+
+JOINT RESPONSE
+Joint 1 initial command: 0.100 radians
+Joint 1 final command: 0.130 radians
+Joint 2 command: 0.755 radians
+
+OBSERVATIONS
+The camera-based controller detected the red
+inspection target and adjusted Joint 1 in response
+to horizontal target displacement.
+
+The controller returned to its configured alignment
+tolerance following the observed disturbance.
+
+LIMITATIONS
+The moving-target recording includes stationary
+periods before and after target movement.
+Joint angles are commanded values, not independently
+measured joint positions.
+Pixel tracking error does not directly represent
+physical end-effector positioning error.

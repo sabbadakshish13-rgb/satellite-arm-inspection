@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="satellite_arm">
+  <material name="blue">
+    <color rgba="0.1 0.4 0.9 1" />
+  </material>
+  <material name="orange">
+    <color rgba="1 0.5 0.1 1" />
+  </material>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.12" length="0.10" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.12" length="0.10" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="2.0" />
+      <inertia ixx="0.0086" ixy="0" ixz="0" iyy="0.0086" iyz="0" izz="0.0144" />
+    </inertial>
+  </link>
+  <joint name="joint1" type="revolute">
+    <parent link="base_link" />
+    <child link="link1" />
+    <origin xyz="0 0 0.10" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1" />
+  </joint>
+  <link name="link1">
+    <visual>
+      <origin xyz="0 0 0.20" />
+      <geometry>
+        <cylinder radius="0.045" length="0.40" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.2" />
+      <geometry>
+        <cylinder radius="0.045" length="0.4" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.2" />
+      <mass value="1.0" />
+      <inertia ixx="0.01383958" ixy="0" ixz="0" iyy="0.01383958" iyz="0" izz="0.00101250" />
+    </inertial>
+  </link>
+  <joint name="joint2" type="revolute">
+    <parent link="link1" />
+    <child link="link2" />
+    <origin xyz="0 0 0.40" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1" />
+      <dynamics damping="0.5" friction="0.0" />
+</joint>
+  <link name="link2">
+    <visual>
+      <origin xyz="0 0 0.15" />
+      <geometry>
+        <cylinder radius="0.035" length="0.30" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.15" />
+      <geometry>
+        <cylinder radius="0.035" length="0.3" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.15" />
+      <mass value="0.6" />
+      <inertia ixx="0.00468375" ixy="0" ixz="0" iyy="0.00468375" iyz="0" izz="0.00036750" />
+    </inertial>
+  </link>
+  <joint name="joint3" type="revolute">
+    <parent link="link2" />
+    <child link="link3" />
+    <origin xyz="0 0 0.30" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1" />
+  </joint>
+  <link name="link3">
+    <visual>
+      <origin xyz="0 0 0.10" />
+      <geometry>
+        <cylinder radius="0.025" length="0.20" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1" />
+      <geometry>
+        <cylinder radius="0.025" length="0.2" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.1" />
+      <mass value="0.3" />
+      <inertia ixx="0.00104688" ixy="0" ixz="0" iyy="0.00104688" iyz="0" izz="0.00009375" />
+    </inertial>
+  </link>
+  <link name="world" />
+  <joint name="world_fixed" type="fixed">
+    <parent link="world" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.5" rpy="0 0 0" />
+  </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint1</joint_name>
+      <topic>/satellite_arm/joint1/cmd_pos</topic>
+      <p_gain>5.0</p_gain>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint2</joint_name>
+      <topic>/satellite_arm/joint2/cmd_pos</topic>
+      <p_gain>2.0</p_gain>
+      <d_gain>0.5</d_gain>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint3</joint_name>
+      <topic>/satellite_arm/joint3/cmd_pos</topic>
+      <p_gain>5.0</p_gain>
+    </plugin>
+  </gazebo>
+<gazebo>
+  <plugin filename="gz-sim-joint-state-publisher-system"
+          name="gz::sim::systems::JointStatePublisher">
+    <topic>/satellite_arm/joint_states</topic>
+    <joint_name>joint1</joint_name>
+    <joint_name>joint2</joint_name>
+    <joint_name>joint3</joint_name>
+  </plugin>
+</gazebo>
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.06 0.06 0.04" />
+      </geometry>
+      <material name="camera_gray">
+        <color rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.06 0.06 0.04" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1" />
+      <inertia ixx="0.0000433" ixy="0" ixz="0" iyy="0.0000433" iyz="0" izz="0.0000600" />
+    </inertial>
+  </link>
+  <joint name="camera_fixed_joint" type="fixed">
+    <parent link="link3" />
+    <child link="camera_link" />
+    <origin xyz="0 0 0.22" rpy="0 0.5 0" />
+  </joint>
+  <gazebo reference="camera_link">
+    <sensor name="inspection_camera" type="camera">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <topic>/satellite_arm/camera/image</topic>
+      <camera>
+        <horizontal_fov>1.047</horizontal_fov>
+        <image>
+          <width>320</width>
+          <height>240</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>10</far>
+        </clip>
+      </camera>
+      <visualize>true</visualize>
+    </sensor>
+  </gazebo>
+</robot>
