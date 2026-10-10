@@ -56,3 +56,10 @@ Note: Moving-target statistics include stationary periods.
 - Add collision detection
 - Develop autonomous inspection trajectories
 - Evaluate tracking under different target speeds
+
+## Gazebo Simulation
+
+The simulation features a robotic arm performing satellite inspection using ROS 2 Jazzy, Gazebo Harmonic, and OpenCV-based target tracking.
+
+![Satellite Inspection Robotic Arm Simulation](images/satellite_arm_simulation.png)
+
